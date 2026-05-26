@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reconhecimento de Alimentos — C2</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+
+<header>
+  <span class="icon">🍽️</span>
+  <div>
+    <h1>Reconhecimento de Alimentos</h1>
+    <p>Projeto Prático C2 — Robótica e Sistemas Inteligentes</p>
+  </div>
+  <span class="badge">Teachable Machine</span>
+</header>
+
+<main>
+  <!-- Painel esquerdo -->
+  <div class="camera-panel">
+
+    <!-- Abas -->
+    <div class="tabs">
+      <button class="tab active" id="tab-camera" onclick="switchTab('camera')">📷 Câmera ao vivo</button>
+      <button class="tab" id="tab-image" onclick="switchTab('image')">🖼️ Enviar imagem</button>
+    </div>
+
+    <!-- Área de visualização -->
+    <div class="video-wrapper" id="video-wrapper">
+
+      <!-- Placeholder câmera -->
+      <div class="placeholder" id="placeholder-camera">
+        <span class="cam-icon">📷</span>
+        <p>Clique em <strong>Iniciar</strong> para ativar a câmera</p>
+      </div>
+
+      <!-- Drop zone imagem -->
+      <div class="drop-zone" id="drop-zone">
+        <input type="file" id="file-input" accept="image/*" />
+        <span class="drop-icon">🖼️</span>
+        <p class="drop-title">Arraste uma imagem aqui</p>
+        <p class="drop-sub">ou clique para selecionar</p>
+      </div>
+
+      <!-- Preview da imagem enviada -->
+      <img id="img-preview" alt="preview" />
+
+      <!-- Feed da webcam -->
+      <div id="webcam-container"></div>
+
+      <!-- Overlay resultado -->
+      <div class="top-label" id="top-label">
+        <span class="food-emoji" id="top-emoji">🍕</span>
+        <div class="label-info">
+          <div class="label-name" id="top-name">—</div>
+          <div class="label-conf" id="label-conf-text">Classe detectada com maior probabilidade</div>
+        </div>
+        <span class="confidence-pill" id="top-pct">0%</span>
+      </div>
+    </div>
+
+    <!-- Controles câmera -->
+    <div class="controls" id="controls-camera">
+      <button id="btn-start" onclick="startCamera()">▶ Iniciar Câmera</button>
+      <button id="btn-stop" onclick="stopCamera()" disabled>⏹ Parar</button>
+    </div>
+
+    <!-- Controles imagem -->
+    <div class="controls hidden" id="controls-image">
+      <button id="btn-new-image" onclick="clearImage()">↩ Nova Imagem</button>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-dot" id="status-dot"></div>
+      <span id="status-text">Modelo carregando...</span>
+    </div>
+  </div>
+
+  <!-- Painel de resultados -->
+  <div class="results-panel">
+    <div class="panel-title">Probabilidades por Classe</div>
+
+    <div class="classes-grid" id="classes-grid"></div>
+
+    <div class="info-card">
+      <h3>Informações do Modelo</h3>
+      <div class="info-row"><span class="key">Algoritmo</span><span class="val">MobileNet v2</span></div>
+      <div class="info-row"><span class="key">Framework</span><span class="val">Teachable Machine</span></div>
+      <div class="info-row"><span class="key">Classes</span><span class="val">4 alimentos</span></div>
+      <div class="info-row"><span class="key">Tamanho de entrada</span><span class="val">224 × 224 px</span></div>
+      <div class="info-row"><span class="key">Versão TF.js</span><span class="val">1.7.4</span></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  Projeto C2 — Reconhecimento de Objetos &nbsp;|&nbsp; Robótica e Sistemas Inteligentes &nbsp;|&nbsp; 2026
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+<script src="./js/app.js"></script>
+</body>
+</html>

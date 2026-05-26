@@ -1,0 +1,449 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #0f1117;
+  color: #e0e0e0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ── */
+header {
+  background: linear-gradient(135deg, #1a1d2e, #252842);
+  border-bottom: 1px solid #2e3150;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+header .icon { font-size: 2rem; }
+
+header h1 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+header p {
+  font-size: 0.8rem;
+  color: #8b92b8;
+  margin-top: 2px;
+}
+
+header .badge {
+  margin-left: auto;
+  background: #3a3f6b;
+  color: #9da8e8;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid #4a5080;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── Layout ── */
+main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+  padding: 24px 40px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ── Tabs ── */
+.tabs {
+  display: flex;
+  background: #1a1d2e;
+  border: 1px solid #2e3150;
+  border-radius: 12px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.tab {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: transparent;
+  color: #6b7280;
+  transition: all 0.2s;
+}
+
+.tab:hover {
+  color: #c9d1f9;
+}
+
+.tab.active {
+  background: #252842;
+  color: #ffffff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+
+/* ── Camera panel ── */
+.camera-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.video-wrapper {
+  position: relative;
+  background: #1a1d2e;
+  border: 1px solid #2e3150;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#webcam-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#webcam-container canvas,
+#webcam-container video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+/* ── Placeholder ── */
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #4a5080;
+  pointer-events: none;
+}
+
+.placeholder .cam-icon {
+  font-size: 4rem;
+  opacity: 0.4;
+}
+
+.placeholder p { font-size: 0.9rem; }
+
+/* ── Drop zone ── */
+.drop-zone {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  border: 2px dashed #2e3150;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  padding: 20px;
+  user-select: none;
+}
+
+.drop-zone.hidden { display: none; }
+
+.drop-zone.drag-over {
+  border-color: #4f5bd5;
+  background: rgba(79, 91, 213, 0.08);
+}
+
+/* Input cobre toda a área — captura clique e drag nativamente */
+.drop-zone #file-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.drop-icon { font-size: 3rem; opacity: 0.5; }
+
+.drop-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #c9d1f9;
+}
+
+.drop-sub {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-top: -4px;
+}
+
+/* ── Image preview ── */
+#img-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 16px;
+  display: none;
+}
+
+#img-preview.visible { display: block; }
+
+/* ── Top prediction overlay ── */
+.top-label {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  background: rgba(10, 12, 24, 0.80);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: none;
+  align-items: center;
+  gap: 12px;
+}
+
+.top-label.visible { display: flex; }
+
+.top-label .food-emoji { font-size: 2rem; }
+
+.top-label .label-info { flex: 1; }
+
+.top-label .label-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.top-label .label-conf {
+  font-size: 0.78rem;
+  color: #8b92b8;
+  margin-top: 2px;
+}
+
+.top-label .confidence-pill {
+  background: #2e3150;
+  color: #9da8e8;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+/* ── Controls ── */
+.controls {
+  display: flex;
+  gap: 12px;
+}
+
+.controls.hidden { display: none; }
+
+button {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#btn-start {
+  background: linear-gradient(135deg, #4f5bd5, #962fbf);
+  color: white;
+}
+
+#btn-start:hover { opacity: 0.9; transform: translateY(-1px); }
+#btn-start:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+#btn-stop {
+  background: #1e2035;
+  color: #8b92b8;
+  border: 1px solid #2e3150;
+}
+
+#btn-stop:hover:not(:disabled) { background: #252842; }
+#btn-stop:disabled { opacity: 0.4; cursor: not-allowed; }
+
+#btn-new-image {
+  background: #1e2035;
+  color: #8b92b8;
+  border: 1px solid #2e3150;
+}
+
+#btn-new-image:hover { background: #252842; color: #c9d1f9; }
+
+/* ── Status bar ── */
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: #6b7280;
+  padding: 0 4px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #374151;
+  transition: background 0.3s;
+}
+
+.status-dot.loading { background: #f59e0b; animation: pulse 1s infinite; }
+.status-dot.active  { background: #10b981; }
+.status-dot.error   { background: #ef4444; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+/* ── Results panel ── */
+.results-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panel-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #6b7280;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #1e2035;
+}
+
+/* ── Class cards ── */
+.classes-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.class-card {
+  background: #1a1d2e;
+  border: 1px solid #2e3150;
+  border-radius: 12px;
+  padding: 14px 16px;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.class-card.active {
+  border-color: #4f5bd5;
+  background: #1c1e38;
+}
+
+.class-card-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.class-emoji { font-size: 1.5rem; }
+
+.class-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #c9d1f9;
+  flex: 1;
+}
+
+.class-pct {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #9da8e8;
+}
+
+.bar-bg {
+  height: 6px;
+  background: #0f1117;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #4f5bd5, #962fbf);
+  width: 0%;
+  transition: width 0.25s ease;
+}
+
+.class-card.active .bar-fill {
+  background: linear-gradient(90deg, #6ee7b7, #3b82f6);
+}
+
+/* ── Info card ── */
+.info-card {
+  background: #1a1d2e;
+  border: 1px solid #2e3150;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.info-card h3 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #1e2035;
+  font-size: 0.82rem;
+}
+
+.info-row:last-child { border-bottom: none; }
+.info-row .key { color: #6b7280; }
+.info-row .val { color: #c9d1f9; font-weight: 500; }
+
+/* ── Footer ── */
+footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 0.75rem;
+  color: #374151;
+  border-top: 1px solid #1a1d2e;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  main { grid-template-columns: 1fr; padding: 16px; }
+  header { padding: 16px; }
+}
